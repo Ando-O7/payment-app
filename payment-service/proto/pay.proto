@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package paymentservice;
+
+service PayManager {
+    // Define the service to pay
+    rpc Charge (PayRequest) returns (PayResponse) {}
+}
+
+// Define the parameters used for card payment in the request
+message PayRequest {
+    int64  id = 1;
+    string token  = 2;
+    int64  amount = 3;
+    string name = 4;
+    string description = 5;
+}
+
+// Define response after card settlement
+message PayResponse {
+    bool paid = 1;
+    int64 amount = 2;
+    bool captured = 3;
+}
