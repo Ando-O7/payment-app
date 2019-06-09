@@ -1,9 +1,10 @@
 package main
 
 import (
-	"os"
-	"net"
+	"context"
 	"log"
+	"net"
+	"os"
 
 	gpay "payment-app/payment-service/proto"
 
@@ -42,10 +43,10 @@ func (c *server) Charge(ctx context.Context, req *gpay.PayRequest) (*gpay.PayRes
 	}
 
 	// Generate Response from the paid result
-	res := &gpay.PayResponse {
-		Paid: 		charge.Paid,
-		Captured: 	charge.Captured,
-		Amount: 	int64(charge.Amount),
+	res := &gpay.PayResponse{
+		Paid:     charge.Paid,
+		Captured: charge.Captured,
+		Amount:   int64(charge.Amount),
 	}
 	return res, nil
 }
