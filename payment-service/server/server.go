@@ -19,17 +19,17 @@ const (
 // server is used to implement sa
 type server struct{}
 
-func (c *server) Charge(ctx context.Context, req *gpay.PayRequest) (*gpay.Response, error) {
+func (c *server) Charge(ctx context.Context, req *gpay.PayRequest) (*gpay.PayResponse, error) {
 	// init API
 	pay := payjp.New(os.Getenv("PAYJP_TEST_SECRET_KEY"), nil)
 
 	// Make a payment. Payment amount for the first argument.
 	// Method and setting of payment for the second argument.
 	charge, err := pay.Charge.Create(int(req.Amount), payjp.Charge{
-		Currency: 		"jpy",
-		CardToken: 		req.Token, // Specify card information, customer ID, or card token. Token this time.
-		Capture: 		true,
-		Description: 	req.Name + ":" req.Description, // Set summary text.
+		Currency:    "jpy",
+		CardToken:   req.Token, // Specify card information, customer ID, or card token. Token this time.
+		Capture:     true,
+		Description: req.Name + ":" + req.Description, // Set summary text.
 	})
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	s := grpc.NewSerevr()
+	s := grpc.NewServer()
 	gpay.RegisterPayManagerServer(s, &server{})
 
 	// Register reflection service on gRPC server.
