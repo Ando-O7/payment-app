@@ -7,6 +7,7 @@ import (
 
 	gpay "payment-app/payment-service/proto"
 
+	"github.com/joho/godotenv"
 	payjp "github.com/payjp/payjp-go/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -20,6 +21,11 @@ const (
 type server struct{}
 
 func (c *server) Charge(ctx context.Context, req *gpay.PayRequest) (*gpay.PayResponse, error) {
+	// load env setting
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	// init API
 	pay := payjp.New(os.Getenv("PAYJP_TEST_SECRET_KEY"), nil)
 
