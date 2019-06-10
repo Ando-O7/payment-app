@@ -2,10 +2,12 @@ package infrastructure
 
 import (
 	"os"
-	"payment-app/backend/backend/handler"
+	"log"
+	"payment-app/backend/handler"
 
 	"github.com/gin-contrib/cors"
 	gin "github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 // Router : router api server
@@ -13,6 +15,12 @@ var Router *gin.Engine
 
 func init() {
 	router := gin.Default()
+
+	// load env
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{os.Getenv("CLIENT_CORS_ADDR")}
