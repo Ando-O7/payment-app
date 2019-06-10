@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS items;
 
-CREATE TABLE item (
+CREATE TABLE items (
     id integer AUTO_INCREMENT,
     name varchar(255),
     description varchar(255),
@@ -19,7 +19,7 @@ VALUES(
     3000
 );
 
-INSERT INTO item(
+INSERT INTO items(
     name,
     description,
     amount
