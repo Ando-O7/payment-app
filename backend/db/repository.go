@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"payment-app/backend/domain"
 )
 
@@ -13,8 +14,8 @@ func SelectAllItems() (items domain.Items, err error) {
 	defer stmt.Close()
 	for stmt.Next() {
 		var id int64
-		var name stmt
-		var description stmt
+		var name string
+		var description string
 		var amount int64
 		if err := stmt.Scan(&id, &name, &description, &amount); err != nil {
 			continue
@@ -31,7 +32,7 @@ func SelectAllItems() (items domain.Items, err error) {
 }
 
 // SelectItem : select post
-func SeletItem(idenfifier int64) (item domain.Item, err error) {
+func SelectItem(identifier int64) (item domain.Item, err error) {
 	stmt, err := Conn.Prepare(fmt.Sprintf("SELECT * FROM items WHERE id = ? LIMIT 1"))
 	if err != nil {
 		fmt.Println(err)
@@ -42,7 +43,7 @@ func SeletItem(idenfifier int64) (item domain.Item, err error) {
 	var name string
 	var description string
 	var amount int64
-	err = stmt.QueryRow(identifier).Scan(&id, &name, &description, $amount)
+	err = stmt.QueryRow(identifier).Scan(&id, &name, &description, &amount)
 	if err != nil {
 		return
 	}

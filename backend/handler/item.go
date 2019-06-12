@@ -13,7 +13,7 @@ func GetLists(c Context) {
 		c.JSON(http.StatusInternalServerError, nil)
 		return
 	}
-	c.JSON(http.Status, res)
+	c.JSON(http.StatusOK, res)
 }
 
 // GetItem : get item by id
@@ -25,7 +25,7 @@ func GetItem(c Context) {
 	}
 	res, err := db.SelectItem(int64(identifer))
 	if err != nil {
-		c.JSON(http.StatusInternalSeverError, nil)
+		c.JSON(http.StatusInternalServerError, nil)
 		return
 	}
 	c.JSON(http.StatusOK, res)

@@ -1,13 +1,14 @@
 package handler
 
 import (
+	"context"
 	"log"
-    "os"
 	"net/http"
-	"strconv"
+	"os"
 	"payment-app/backend/db"
 	"payment-app/backend/domain"
 	gpay "payment-app/payment-service/proto"
+	"strconv"
 
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
@@ -17,12 +18,12 @@ import (
 func Charge(c Context) {
 	// load env
 	err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error loading .env file")
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
 	// receive parameters and body
-	t := domain.Payment()
+	t := domain.Payment{}
 	c.Bind(&t)
 	identifer, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -36,11 +37,11 @@ func Charge(c Context) {
 	}
 	// create request to send to gRPC server
 	greq := &gpay.PayRequest{
-		Id:			 int64(identifer),
-		Token: 		 t.Token,
-		Amount: 	 res.Amount,
-		Name: 		 res.Name,
-		Description: res.Description
+		Id:          int64(identifer),
+		Token:       t.Token,
+		Amount:      res.Amount,
+		Name:        res.Name,
+		Description: res.Description,
 	}
 
 	// Connect to the server by specifying the IP address(here localhost) and the port number(here 50051)
