@@ -2,8 +2,11 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
+import PayjpCheckout from 'vue-payjp-checkout'
 
 Vue.config.productionTip = false
+
+Vue.use(PayjpCheckout)
 
 new Vue({
   router,
