@@ -1,9 +1,9 @@
 <template>
     <div class="hello">
         <ul>
-            <li v-for="item in items" :key="item.ID" @click="pageto(item.ID)">
+            <div v-for="item in items" :key="item.ID" @click="pageto(item.ID)">
                 <item-card :item="item"></item-card>
-            </li>
+            </div>
         </ul>
     </div>
 </template>
